@@ -39,12 +39,6 @@
             },
             "defaultValue": "23:00"
         },
-        "windowsUpdate": {
-            "type": "bool",
-            "allowedValues": [
-                true,
-                false
-            ],
             "metadata": {
                 "description": "Whether to update Windows (takes around 30 minutes to complete)"
             },
@@ -63,7 +57,8 @@
         "dnsNameForPublicIP": "[concat('cgp', uniqueString(resourceGroup().id, deployment().name))]",
         "scriptFolder": ".",
         "scriptFileName": "setup.ps1",
-        "scriptLocation": "https://raw.githubusercontent.com/MariuszFerdyn/azure-gaming/master"
+        "scriptLocation": "https://raw.githubusercontent.com/MariuszFerdyn/azure-gaming/master",
+        "windowsUpdate": $false,
         "scriptParameters": "[concat('-admin_username \"', parameters('adminUsername'), '\" -admin_password \"', parameters('adminPassword'), '\"')]"
     },
     "resources": [
