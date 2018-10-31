@@ -39,13 +39,6 @@
             },
             "defaultValue": "23:00"
         },
-        "scriptLocation": {
-            "type": "string",
-            "metadata": {
-                "description": "Location of the setup script."
-            },
-            "defaultValue": "https://raw.githubusercontent.com/ecalder6/azure-gaming/master"
-        },
         "windowsUpdate": {
             "type": "bool",
             "allowedValues": [
@@ -56,13 +49,6 @@
                 "description": "Whether to update Windows (takes around 30 minutes to complete)"
             },
             "defaultValue": false
-        },
-        "networkID": {
-            "type": "securestring",
-            "metadata": {
-                "description": "Your zero tier network ID."
-            },
-            "defaultValue": ""
         }
     },
     "variables": {
@@ -77,7 +63,8 @@
         "dnsNameForPublicIP": "[concat('cgp', uniqueString(resourceGroup().id, deployment().name))]",
         "scriptFolder": ".",
         "scriptFileName": "setup.ps1",
-        "scriptParameters": "[concat('-network \"', parameters('networkID'), '\" -admin_username \"', parameters('adminUsername'), '\" -admin_password \"', parameters('adminPassword'), '\"')]"
+        "scriptLocation": "https://raw.githubusercontent.com/MariuszFerdyn/azure-gaming/master"
+        "scriptParameters": "[concat('-admin_username \"', parameters('adminUsername'), '\" -admin_password \"', parameters('adminPassword'), '\"')]"
     },
     "resources": [
         {
