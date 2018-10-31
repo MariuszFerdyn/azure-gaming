@@ -38,8 +38,7 @@
                 "description": "The time for daily auto-shutdown."
             },
             "defaultValue": "23:00"
-        },
-       }
+        }
     },
     "variables": {
         "nicName": "CloudGamingNic",
@@ -52,9 +51,9 @@
         "publicIPAddressName": "CloudGamingsPublicIP",
         "dnsNameForPublicIP": "[concat('cgp', uniqueString(resourceGroup().id, deployment().name))]",
         "scriptFolder": ".",
-        "scriptFileName": "setup.ps1",
         "windowsUpdate": false,
         "scriptLocation": "https://raw.githubusercontent.com/ecalder6/azure-gaming/master",
+        "scriptFileName": "setup.ps1",
         "scriptParameters": "[concat('-admin_username \"', parameters('adminUsername'), '\" -admin_password \"', parameters('adminPassword'), '\"')]"
     },
     "resources": [
