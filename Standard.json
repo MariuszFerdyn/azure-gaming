@@ -52,7 +52,7 @@
         "dnsNameForPublicIP": "[concat('cgp', uniqueString(resourceGroup().id, deployment().name))]",
         "scriptFolder": ".",
         "windowsUpdate": false,
-        "scriptLocation": "https://raw.githubusercontent.com/ecalder6/azure-gaming/master",
+        "scriptLocation": "https://raw.githubusercontent.com/MariuszFerdyn/azure-gaming/master",
         "scriptFileName": "setup.ps1",
         "scriptParameters": "[concat('-admin_username \"', parameters('adminUsername'), '\" -admin_password \"', parameters('adminPassword'), '\"')]"
     },
