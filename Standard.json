@@ -2,6 +2,13 @@
     "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
+  "parameters": {
+    "vmName": {
+      "type": "string",
+      "metadata": {
+        "description": "Virtual Machine Name."
+      }
+    },
         "adminUsername": {
             "type": "string",
             "metadata": {
@@ -46,7 +53,6 @@
         "subnetName": "Subnet",
         "subnetPrefix": "10.0.0.0/24",
         "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), variables('subnetName'))]",
-        "vmName": "CloudGaming",
         "virtualNetworkName": "CloudGamingVNET",
         "publicIPAddressName": "CloudGamingsPublicIP",
         "dnsNameForPublicIP": "[concat('cgp', uniqueString(resourceGroup().id, deployment().name))]",
@@ -117,7 +123,7 @@
             }
         },
         {
-            "name": "[concat('shutdown-computevm-', variables('vmName'))]",
+            "name": "[concat('shutdown-computevm-', parameters('vmName'))]",
             "type": "Microsoft.DevTestLab/schedules",
             "apiVersion": "2017-04-26-preview",
             "location": "[resourceGroup().location]",
@@ -128,18 +134,18 @@
                     "time": "[parameters('autoShutdownTime')]"
                 },
                 "timeZoneId": "[parameters('autoShutdownTimeZone')]",
-                "targetResourceId": "[resourceId('Microsoft.Compute/virtualMachines', variables('vmName'))]",
+                "targetResourceId": "[resourceId('Microsoft.Compute/virtualMachines', parameters('vmName'))]",
                 "notificationSettings": {
                     "status": "Disabled",
                     "timeInMinutes": "30"
                 }
             },
             "dependsOn": [
-                "[concat('Microsoft.Compute/virtualMachines/', variables('vmName'))]"
+                "[concat('Microsoft.Compute/virtualMachines/', parameters('vmName'))]"
             ]
         },
         {
-            "name": "[variables('vmName')]",
+            "name": "[parameters('vmName')]",
             "type": "Microsoft.Compute/virtualMachines",
             "apiVersion": "2017-03-30",
             "location": "[resourceGroup().location]",
@@ -148,7 +154,7 @@
             ],
             "properties": {
                 "osProfile": {
-                    "computerName": "[variables('vmName')]",
+                    "computerName": "[parameters('vmName')]",
                     "adminUsername": "[parameters('adminUsername')]",
                     "adminPassword": "[parameters('adminPassword')]",
                     "windowsConfiguration": {
@@ -188,7 +194,7 @@
                     "apiVersion": "2015-06-15",
                     "location": "[resourceGroup().location]",
                     "dependsOn": [
-                        "[variables('vmName')]"
+                        "[parameters('vmName')]"
                     ],
                     "properties": {
                         "publisher": "Microsoft.Compute",
@@ -210,7 +216,7 @@
                     "apiVersion": "2015-06-15",
                     "location": "[resourceGroup().location]",
                     "dependsOn": [
-                        "[variables('vmName')]"
+                        "[parameters('vmName')]"
                     ],
                     "properties": {
                         "publisher": "Microsoft.Compute",
