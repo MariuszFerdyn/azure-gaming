@@ -29,7 +29,7 @@ Just push the button Deploy To Azure.
 
 ### II. Automatically Deploy Your Azure VM
 #### Automated Standard
-<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FMariuszFerdyn6%2Fazure-gaming%2Fmaster%2FStandard.json" target="_blank">
+<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FMariuszFerdyn%2Fazure-gaming%2Fmaster%2FStandard.json" target="_blank">
     <img src="http://azuredeploy.net/deploybutton.png"/>
 </a>
 
