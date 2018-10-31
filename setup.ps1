@@ -1,13 +1,10 @@
 param (
-    [string]$network = "",
     [string]$admin_username = "",
-    [string]$admin_password = "",
-    [switch]$windows_update = $false,
-    [switch]$manual_install = $false
+    [string]$admin_password = ""
 )
 
 function Get-UtilsScript ($script_name) {
-    $url = "https://raw.githubusercontent.com/ecalder6/azure-gaming/master/$script_name"
+    $url = "https://raw.githubusercontent.com/MariuszFerdyn/azure-gaming/master/$script_name"
     Write-Host "Downloading utils script from $url"
     [Net.ServicePointManager]::SecurityProtocol = [System.Net.SecurityProtocolType]::Tls12
 
@@ -18,24 +15,18 @@ function Get-UtilsScript ($script_name) {
 $script_name = "utils.psm1"
 Get-UtilsScript $script_name
 Import-Module "C:\$script_name"
-
-if ($windows_update) {
-    Update-Windows
-}
 Update-Firewall
 Disable-Defender
 Disable-ScheduledTasks
 Disable-IPv6To4
-if ($manual_install) {
-    Disable-InternetExplorerESC
-    Edit-VisualEffectsRegistry
-}
-Add-DisconnectShortcut
+Disable-InternetExplorerESC
+Edit-VisualEffectsRegistry
+#Add-DisconnectShortcut
 
-Install-Chocolatey
-Install-VPN
-Join-Network $network
-Install-NSSM
+#Install-Chocolatey
+#Install-VPN
+#Join-Network $network
+#Install-NSSM
 
 Install-NvidiaDriver $manual_install
 Set-ScheduleWorkflow $admin_username $admin_password $manual_install
