@@ -51,7 +51,7 @@
         "publicIPAddressName": "CloudGamingsPublicIP",
         "dnsNameForPublicIP": "[concat('cgp', uniqueString(resourceGroup().id, deployment().name))]",
         "scriptFolder": ".",
-        "windowsUpdate": false,
+        "windowsUpdate": 0,
         "scriptLocation": "https://raw.githubusercontent.com/ecalder6/azure-gaming/master",
         "scriptFileName": "setup.ps1",
         "scriptParameters": "[concat('-admin_username \"', parameters('adminUsername'), '\" -admin_password \"', parameters('adminPassword'), '\"')]"
@@ -182,7 +182,7 @@
             },
             "resources": [
                 {
-                    "condition": "[equals(parameters('windowsUpdate'), bool('false') )]",
+                    "condition": "[equals(variables('windowsUpdate'), bool('false') )]",
                     "type": "extensions",
                     "name": "SetupWithoutWindowsUpdate",
                     "apiVersion": "2015-06-15",
@@ -197,14 +197,14 @@
                         "autoUpgradeMinorVersion": true,
                         "settings": {
                             "fileUris": [
-                                "[concat(parameters('scriptLocation'), '/', variables('ScriptFolder'), '/', variables('ScriptFileName'))]"
+                                "[concat(variables('scriptLocation'), '/', variables('ScriptFolder'), '/', variables('ScriptFileName'))]"
                             ],
                             "commandToExecute": "[concat('powershell -ExecutionPolicy Unrestricted -File ', variables('scriptFolder'), '/', variables('scriptFileName'), ' ', variables('scriptParameters'))]"
                         }
                     }
                 },
                 {
-                    "condition": "[equals(parameters('windowsUpdate'), bool('true') )]",
+                    "condition": "[equals(variables('windowsUpdate'), bool('true') )]",
                     "type": "extensions",
                     "name": "SetupWithWindowsUpdate",
                     "apiVersion": "2015-06-15",
