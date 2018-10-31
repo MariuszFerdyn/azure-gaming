@@ -7,8 +7,7 @@ Orginal project was inspired by this (https://lg.io/2016/10/12/cloudy-gamer-play
 
 
 ## Disclaimer
-**This software comes with no warranty of any kind**. USE AT YOUR OWN RISK! This a personal project and is NOT endorsed by Microsoft. If you encounter an issue, please submit it on GitHub.
-
+**This software comes with no warranty of any kind**.
 
 ## Pricing
 To game on the cloud on Azure, you will have to pay for the virtual machine, outgoing data bandwidth from the VM, and managed disk space. 
