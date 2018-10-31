@@ -23,21 +23,13 @@ Azure also charges you for the number of transactions on managed disk. The calcu
 * [Price Calculator for Standard](https://azure.com/e/5479babbd37e46b68730b27e9fd1a641)
 * [Price Calculator for Low Priority](https://azure.com/e/f0e1298bc0984f178ba002d3316d9974)
 
-| Type          | Bandwidth (Mbits/sec) | Monthly Data (GBs) | Monthly Price* | Hourly Price* |
-| ------------- | --------------------: | -----------------: | -------------: | ------------: |
-| Standard      |                    30 |                473 |         $95.11 |         $2.72 |
-| Standard      |                    15 |                236 |         $74.49 |         $2.13 |
-| Low Priority  |                    30 |                473 |         $68.16 |         $1.95 |
-| Low Priority  |                    15 |                236 |         $47.54 |         $1.36 |
-
-*As of 05/06/2018
 
 ## Usage
-Just Push the button Deploy To Azure.
+Just push the button Deploy To Azure.
 
 ### II. Automatically Deploy Your Azure VM
 #### Automated Standard
-<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2MariuszFerdyn6%2Fazure-gaming%2Fmaster%2FStandard.json" target="_blank">
+<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FMariuszFerdyn6%2Fazure-gaming%2Fmaster%2FStandard.json" target="_blank">
     <img src="http://azuredeploy.net/deploybutton.png"/>
 </a>
 
