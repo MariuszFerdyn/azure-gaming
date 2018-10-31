@@ -1,5 +1,4 @@
-# Cloud Gaming Made Easy
-
+# Azure Gaming 
 ## About
 The setup script configures everything that's needed to run or develop games via Remote Desktop. It use Azure NV6 virtual machine (VM) with a single Nvidia M60 GPU (1/2 of a M60 graphics card).
 
