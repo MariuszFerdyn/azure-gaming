@@ -138,7 +138,7 @@
                 },
                 "virtualMachineProfile": {
                     "priority": "Low",
-                    "evictionPolicy": "delete",
+                    "evictionPolicy": "Deallocate",
                     "storageProfile": {
                         "osDisk": {
                             "caching": "ReadWrite",
