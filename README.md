@@ -25,6 +25,9 @@ Azure also charges you for the number of transactions on managed disk. The calcu
 
 ## Usage
 Just push the button Deploy To Azure.
+If you Open Device Manager and you can not see NVIDIA Tesla M60 Graphics Card just open PowerShell and type:
+Start-Process -FilePath "C:\NVIDIA\DisplayDriver\391.03\Win10_64\International\setup.exe" -ArgumentList "-s", "-noreboot" -Wait
+
 
 ### II. Automatically Deploy Your Azure VM
 #### Automated Standard
