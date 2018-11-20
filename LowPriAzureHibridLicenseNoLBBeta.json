@@ -1,0 +1,144 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+            "vmssName": {
+            "type": "string",
+            "metadata": {
+                "description": "Name for the Scale Sets of Virtual Machines."
+            }
+        },
+        "adminUsername": {
+            "type": "string",
+            "metadata": {
+                "description": "Username for the Virtual Machine."
+            }
+        },
+        "adminPassword": {
+            "type": "securestring",
+            "metadata": {
+                "description": "Password for the Virtual Machine."
+            }
+        }
+    },
+    "variables": {
+        "nicName": "CloudGamingNic",
+        "addressPrefix": "10.0.0.0/16",
+        "subnetName": "Subnet",
+        "subnetPrefix": "10.0.0.0/24",
+        "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), variables('subnetName'))]",
+        "virtualNetworkName": "CloudGamingVNET",
+        "scriptFolder": ".",
+        "scriptFileName": "setup.ps1",
+		"scriptLocation": "https://raw.githubusercontent.com/MariuszFerdyn/azure-gaming/master",
+        "scriptParameters": "[concat('-admin_username \"', parameters('adminUsername'), '\" -admin_password \"', parameters('adminPassword'), '\"')]"
+    },
+    "resources": [
+        {
+            "name": "[variables('virtualNetworkName')]",
+            "type": "Microsoft.Network/virtualNetworks",
+            "apiVersion": "2018-02-01",
+            "location": "[resourceGroup().location]",
+            "properties": {
+                "addressSpace": {
+                    "addressPrefixes": [
+                        "[variables('addressPrefix')]"
+                    ]
+                },
+                "subnets": [
+                    {
+                        "name": "[variables('subnetName')]",
+                        "properties": {
+                            "addressPrefix": "[variables('subnetPrefix')]"
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "name": "[parameters('vmssName')]",
+            "type": "Microsoft.Compute/virtualMachineScaleSets",
+            "apiVersion": "2017-12-01",
+            "location": "[resourceGroup().location]",
+            "dependsOn": [
+                "[variables('virtualNetworkName')]"
+            ],
+            "sku": {
+                "name": "Standard_NV6",
+                "capacity": "1"
+            },
+            "properties": {
+                "overprovision": "false",
+                "upgradePolicy": {
+                    "mode": "Manual"
+                },
+                "virtualMachineProfile": {
+                    "licenseType": "Windows_Server",
+                    "priority": "Low",
+                    "evictionPolicy": "Deallocate",
+                    "storageProfile": {
+                        "osDisk": {
+                            "caching": "ReadWrite",
+                            "createOption": "FromImage"
+                        },
+                        "imageReference":  {
+                            "publisher": "MicrosoftWindowsServer",
+                            "offer": "WindowsServer",
+                            "sku": "2016-Datacenter",
+                            "version": "latest"
+                        }
+                    },
+                    "osProfile": {
+                        "computerNamePrefix": "CG",
+                        "adminUsername": "[parameters('adminUsername')]",
+                        "adminPassword": "[parameters('adminPassword')]"
+                    },
+                    "networkProfile": {
+                        "networkInterfaceConfigurations": [
+                          {
+                            "name": "[variables('nicName')]",
+                            "properties": {
+                              "primary": true,
+                              "ipConfigurations": [
+                                {
+                                  "name": "ipconfig1",
+                                  "properties": {
+                                    "subnet": {
+                                        "id": "[variables('subnetRef')]"
+                                    },
+                                    "publicipaddressconfiguration": {
+                                      "name": "pub1",
+                                      "properties": {
+                                        "idleTimeoutInMinutes": 15
+                                      }
+                                    }
+                                  }
+                                }
+                              ]
+                            }
+                          }
+                        ]
+                    },
+                    "extensionProfile": {
+                        "extensions": [
+                        {
+                            "name": "Setup",
+                            "properties": {
+                                "publisher": "Microsoft.Compute",
+                                "type": "CustomScriptExtension",
+                                "typeHandlerVersion": "1.8",
+                                "autoUpgradeMinorVersion": true,
+                                "settings": {
+                                    "fileUris": [
+                                        "[concat(variables('scriptLocation'), '/', variables('ScriptFolder'), '/', variables('ScriptFileName'))]"
+                                    ],
+                                    "commandToExecute": "[concat('powershell -ExecutionPolicy Unrestricted -File ', variables('scriptFolder'), '/', variables('scriptFileName'), ' ', variables('scriptParameters'))]"
+                                }
+                            }
+                        }]
+                    }
+                }
+            }
+        }
+    ]
+}
