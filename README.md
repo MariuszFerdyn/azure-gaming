@@ -29,7 +29,13 @@ If you Open Device Manager and you can not see NVIDIA Tesla M60 Graphics Card ju
 
 Start-Process -FilePath "C:\NVIDIA\DisplayDriver\391.03\Win10_64\International\setup.exe" -ArgumentList "-s", "-noreboot" -Wait
 
-After that please restart computer.
+After that please restart computer and open PowerShell in Admin mode agian and issue:
+
+$nvsmi = "C:\Program Files\NVIDIA Corporation\NVSMI\nvidia-smi.exe"
+$gpu = & $nvsmi --format=csv,noheader --query-gpu=pci.bus_id
+& $nvsmi -g $gpu -fdm 0
+
+and restart computer just again.
 
 ### II. Automatically Deploy Your Azure VM
 #### Automated Standard
